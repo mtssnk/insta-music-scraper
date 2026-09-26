@@ -4,6 +4,7 @@
 # Generated data
 data/posts.jsonl
 data/state.json
+data/probe/
 *.tmp
 output/
 

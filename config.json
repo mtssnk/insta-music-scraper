@@ -14,11 +14,18 @@
     "maxDelayMs": 9000
   },
 
+  "breaks": {
+    "everyPages": 20,
+    "minMs": 60000,
+    "maxMs": 180000
+  },
+
   "backoff": {
     "initialMs": 120000,
     "maxMs": 1800000,
     "maxConsecutiveFailures": 5
   },
 
-  "browserProfileDir": ".browser-profile"
+  "browserProfileDir": ".browser-profile",
+  "browserExecutable": "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser"
 }

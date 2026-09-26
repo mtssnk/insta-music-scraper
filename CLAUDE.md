@@ -57,7 +57,9 @@ Node.js (LTS) with **Playwright** (Chromium), organised as three independent sta
 ### 3. `export` — write the spreadsheet
 
 - Write `output/records.xlsx` (with `exceljs`) and `output/records.csv`.
-- Columns: #, Artist, Title, Label, Format, Date, Instagram post (hyperlink), Discogs (hyperlink), Notes. Highlight rows that need checking, freeze the header row and turn on filters.
+- Columns: #, Artist, Title, Label, Format, Date, Instagram post (hyperlink), Discogs (hyperlink), Needs check, Notes. Highlight rows that need checking, freeze the header row and turn on filters.
+- The Instagram post cell must display the full URL (`https://www.instagram.com/p/{shortcode}/`), not a label like "Open post", and every row must have it, including rows with a blank artist or title. That way the user can open the post and fill in missing data by hand, and the link survives in the CSV, which can't hold hyperlinks.
+- Needs check is `Yes` whenever the record is flagged `needs_check` or its artist, title or label is blank, so filtering on it lists every row that needs manual work.
 - Discogs search URL: `https://www.discogs.com/search/?q={artist}+{title}&type=all`. For "Various" releases, search with `{title} {label}` instead.
 - Optional later stage: resolve exact Discogs release pages through the official Discogs API (needs a token, and is rate-limited to 60 requests per minute), with its own cache.
 
