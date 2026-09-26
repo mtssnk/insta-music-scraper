@@ -1,0 +1,24 @@
+{
+  "account": "guestsixonetwo",
+  "profileUrl": "https://www.instagram.com/guestsixonetwo/",
+
+  "start": {
+    "afterShortcode": "DUAo3JdjfWR",
+    "postNumber": 724,
+    "recaptureBeforeStart": true
+  },
+
+  "scroll": {
+    "stepPx": 800,
+    "minDelayMs": 5000,
+    "maxDelayMs": 9000
+  },
+
+  "backoff": {
+    "initialMs": 120000,
+    "maxMs": 1800000,
+    "maxConsecutiveFailures": 5
+  },
+
+  "browserProfileDir": ".browser-profile"
+}

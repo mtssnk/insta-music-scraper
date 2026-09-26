@@ -1,0 +1,20 @@
+# Logged-in Instagram session: never commit
+.browser-profile/
+
+# Generated data
+data/posts.jsonl
+data/state.json
+*.tmp
+output/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Environment / secrets (e.g. Discogs token)
+.env
+.env.*
+
+# OS / editor
+.DS_Store
+.vscode/
