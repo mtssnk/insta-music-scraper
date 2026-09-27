@@ -50,7 +50,8 @@ function finish(reason, exitCode = 0) {
 function handlePage(page, { trackPosition }) {
   const fresh = [];
   for (const post of page.posts) {
-    if (trackPosition) {
+    // A top-up only looks at the newest posts, so it leaves the full-run position alone.
+    if (trackPosition && !topUp) {
       state.position = (state.position ?? 0) + 1;
       if (post.shortcode === config.start.afterShortcode) checkAnchor();
     }
@@ -74,7 +75,9 @@ function handlePage(page, { trackPosition }) {
   const date = oldest?.taken_at?.slice(0, 10) ?? '?';
   const total = state.totalPosts ? `/${state.totalPosts}` : '';
   console.log(
-    `page ${run.pages} · reached post ${state.position ?? '?'}${total} (${date}) · +${fresh.length} new · ${collected} collected`,
+    topUp
+      ? `page ${run.pages} (back to ${date}) · +${fresh.length} new · ${collected} collected`
+      : `page ${run.pages} · reached post ${state.position ?? '?'}${total} (${date}) · +${fresh.length} new · ${collected} collected`,
   );
   return fresh.length;
 }
@@ -184,7 +187,7 @@ if (!firstPage.hasNextPage) {
 } else if (!template) {
   finish('the grid never requested a second page. Run `pnpm probe` and check src/adapter.js', 1);
 } else if (topUp && newOnPage === 0) {
-  finish('no new posts');
+  finish(run.newPosts ? `caught up: ${run.newPosts} new post(s)` : 'no new posts');
 } else {
   await crawl();
 }
@@ -233,7 +236,7 @@ async function crawl() {
         if (!topUp) state.reachedEnd = true;
         return finish(`reached the oldest post (${collected} collected; profile shows ${state.totalPosts ?? '?'})`);
       }
-      if (topUp && fresh === 0) return finish('caught up with new posts');
+      if (topUp && fresh === 0) return finish(`caught up: ${run.newPosts} new post(s)`);
       cursor = pageData.endCursor;
       continue;
     }

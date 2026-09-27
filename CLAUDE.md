@@ -96,6 +96,15 @@ The run *will* be interrupted, by rate limits, crashes, sleep or Ctrl-C. Every s
 - Treat the run as finished (`reachedEnd: true`) when the response reports no more pages, or when the collected count matches the post count shown on the profile.
 - Import `seed_records.json` into the dataset once, so it counts as already collected. The scraper should still re-fetch those posts to get their full captions and dates, but must never overwrite the hand-parsed fields.
 
+## Topping up with new posts
+
+The full scrape finished on 2026-09-26: 2,429 posts, with `reachedEnd: true`. From then on, `pnpm scrape` runs in **top-up mode**. It pages from the newest post and stops at the first page that contains no new posts, which normally takes 2 requests.
+
+- **The pinned (sticky) post** always comes first in the feed, whatever its date. Because it's already in the seen-set, it never counts as new and doesn't affect the stop rule. If a new post is pinned, it's simply collected as new.
+- **`posts.jsonl` is not in chronological order.** Top-up posts are appended to the end, and the pinned post sits wherever it was first captured. The parse and export stages must therefore **sort by `taken_at` (newest first)** and never rely on file order or feed position. The `pinned` field is only a snapshot from capture time.
+- A top-up leaves `position` and `lastCursor` unchanged.
+- **To force a full rescan**, for example to pick up edited captions, delete `data/state.json`. Posts already saved are still skipped, so this only fills in gaps.
+
 ## Suggested layout
 
 ```

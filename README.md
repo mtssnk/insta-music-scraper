@@ -48,6 +48,10 @@ Stop it whenever you like with **Ctrl-C**, or let it stop itself. Instagram limi
 
 Run `pnpm scrape` again later and it picks up where it left off. Posts it has already saved are never fetched twice.
 
+## Adding new posts
+
+Once everything has been collected, just run `pnpm scrape` again whenever you like. It checks the newest posts, saves any it hasn't seen, and stops as soon as it reaches posts it already has. That's usually a couple of requests and well under a minute. The pinned post at the top of the profile is recognised and ignored.
+
 ## Configuration
 
 Edit [config.json](config.json):
